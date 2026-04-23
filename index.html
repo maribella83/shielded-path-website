@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Shielded Path — Your Family's Trusted Digital Herder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark: #0D2A5E;
+      --blue-mid: #1565C0;
+      --blue-bright: #1E88E5;
+      --blue-accent: #42A5F5;
+      --blue-light: #E3F2FD;
+      --white: #FFFFFF;
+      --off-white: #F4F7FB;
+      --text-dark: #0D1B3E;
+      --text-muted: #546E8A;
+      --border: rgba(21, 101, 192, 0.15);
+      --green: #2E7D32;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      color: var(--text-dark);
+      background: var(--off-white);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13, 42, 94, 0.97);
+      backdrop-filter: blur(8px);
+      padding: 0 5%; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(66, 165, 245, 0.2);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(66,165,245,0.5)); }
+    .nav-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.4rem; color: #fff; letter-spacing: 0.04em; line-height: 1.1; }
+    .nav-name span { display: block; font-size: 0.72rem; font-weight: 500; color: var(--blue-accent); letter-spacing: 0.12em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.01em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue-accent); }
+    .nav-cta { background: var(--blue-accent) !important; color: var(--blue-dark) !important; padding: 10px 22px !important; border-radius: 8px; font-weight: 700 !important; letter-spacing: 0 !important; line-height: 1 !important; display: inline-flex !important; align-items: center !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(170deg, #0A1A40 0%, #0D2A5E 45%, #1565C0 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 5% 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 15% 50%, rgba(30,136,229,0.12) 0%, transparent 50%), radial-gradient(circle at 85% 20%, rgba(66,165,245,0.08) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; max-width: 1100px; width: 100%; }
+    .hero-text { z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(66,165,245,0.12); border: 1px solid rgba(66,165,245,0.3);
+      border-radius: 100px; padding: 6px 16px; font-size: 0.78rem; font-weight: 600;
+      color: var(--blue-accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-accent); }
+    h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: 0.02em; margin-bottom: 20px; }
+    h1 em { font-style: normal; color: var(--blue-accent); }
+    .hero-subtitle { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 40px; max-width: 480px; }
+    .download-group { display: flex; flex-direction: column; gap: 14px; }
+    .download-label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+    .download-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-download {
+      display: flex; align-items: center; gap: 12px; background: var(--white); color: var(--text-dark);
+      text-decoration: none; padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+    .btn-download-sub { display: block; font-size: 0.68rem; font-weight: 400; color: var(--text-muted); line-height: 1; margin-bottom: 2px; }
+    .btn-download-name { display: block; font-size: 1rem; font-weight: 700; line-height: 1; }
+
+    /* PHONE MOCKUP */
+    .hero-visual { display: flex; justify-content: center; align-items: center; z-index: 1; }
+    .phone-wrap { position: relative; width: 260px; }
+    .phone-shell {
+      background: #0A0F1E; border-radius: 38px;
+      border: 2px solid rgba(66,165,245,0.35); padding: 14px 10px;
+      box-shadow: 0 0 0 1px rgba(66,165,245,0.12), 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .phone-notch { width: 70px; height: 8px; background: #0A0F1E; border-radius: 0 0 10px 10px; margin: 0 auto 10px; border: 1px solid rgba(66,165,245,0.2); }
+    .phone-screen { background: #1565C0; border-radius: 24px; padding: 16px 12px; min-height: 420px; }
+    .ps-header { color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+    .ps-shield-btn { background: #2E7D32; border-radius: 10px; padding: 10px; text-align: center; color: #fff; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px; }
+    .ps-stats { display: flex; gap: 6px; margin-bottom: 10px; }
+    .ps-stat { flex: 1; background: #0D47A1; border-radius: 8px; padding: 8px 6px; }
+    .ps-stat-label { color: #90CAF9; font-size: 0.6rem; display: block; margin-bottom: 2px; }
+    .ps-stat-num { color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; display: block; line-height: 1; }
+    .ps-section-title { color: #fff; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; }
+    .ps-device { background: #1976D2; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; }
+    .ps-device-name { color: #fff; font-size: 0.72rem; font-weight: 700; }
+    .ps-device-status { color: #7CFC8A; font-size: 0.65rem; }
+    .ps-glow { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 160px; height: 40px; background: rgba(66,165,245,0.2); border-radius: 50%; filter: blur(20px); }
+
+    /* STATS STRIP */
+    .stats-strip {
+      background: var(--blue-dark); padding: 28px 5%;
+      display: flex; justify-content: center;
+      border-top: 1px solid rgba(66,165,245,0.15); border-bottom: 1px solid rgba(66,165,245,0.15);
+    }
+    .stat-item { text-align: center; padding: 0 48px; border-right: 1px solid rgba(66,165,245,0.2); }
+    .stat-item:last-child { border-right: none; }
+    .stat-number { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: var(--blue-accent); line-height: 1; display: block; }
+    .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); display: block; margin-top: 4px; }
+
+    /* SHARED */
+    .section { padding: 96px 5%; max-width: 1100px; margin: 0 auto; }
+    .section-tag { font-size: 0.75rem; font-weight: 600; color: var(--blue-mid); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    h2 { font-family: 'Rajdhani', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: var(--text-dark); letter-spacing: 0.02em; margin-bottom: 16px; line-height: 1.2; }
+    .section-intro { font-size: 1.05rem; color: var(--text-muted); max-width: 520px; line-height: 1.7; margin-bottom: 56px; }
+
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .feature-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(21,101,192,0.1); border-color: rgba(21,101,192,0.3); }
+    .feature-icon { width: 48px; height: 48px; background: var(--blue-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .feature-icon svg { width: 24px; height: 24px; color: var(--blue-mid); }
+    .feature-title { font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+    .feature-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* SAFETY PROMISE */
+    .promise-section { background: var(--white); padding: 96px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .promise-inner { max-width: 1100px; margin: 0 auto; }
+    .promise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .promise-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .promise-item { display: flex; align-items: flex-start; gap: 14px; }
+    .promise-check { width: 22px; height: 22px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .promise-check svg { width: 12px; height: 12px; color: var(--green); }
+    .promise-text { font-size: 0.96rem; color: var(--text-dark); line-height: 1.6; }
+    .promise-text strong { font-weight: 600; }
+    .trust-cards { display: flex; flex-direction: column; gap: 14px; }
+    .trust-card { background: var(--off-white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-left: 4px solid var(--blue-mid); }
+    .trust-card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .trust-card-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* FAITH */
+    .faith-section { background: #F0F4FF; padding: 96px 5%; border-top: 1px solid var(--border); }
+    .faith-inner { max-width: 1100px; margin: 0 auto; }
+    .faith-intro { font-size: 1rem; color: var(--text-muted); max-width: 580px; line-height: 1.75; margin-bottom: 48px; }
+    .faith-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px; }
+    .faith-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color 0.2s, transform 0.2s; }
+    .faith-card:hover { border-color: rgba(21,101,192,0.35); transform: translateY(-2px); }
+    .faith-icon { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+    .faith-name { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .faith-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
+    .prayer-callout { background: var(--blue-dark); border-radius: 16px; padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+    .prayer-callout-text h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .prayer-callout-text p { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 440px; }
+    .prayer-callout-badge { background: rgba(66,165,245,0.15); border: 1px solid rgba(66,165,245,0.3); border-radius: 12px; padding: 18px 24px; text-align: center; flex-shrink: 0; min-width: 160px; }
+    .prayer-callout-badge-icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .prayer-callout-badge-label { color: var(--blue-accent); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; }
+
+    /* HOW IT WORKS */
+    .how-section { background: var(--blue-dark); padding: 96px 5%; }
+    .how-inner { max-width: 1100px; margin: 0 auto; }
+    .how-section .section-tag { color: var(--blue-accent); }
+    .how-section h2 { color: #fff; }
+    .how-section .section-intro { color: rgba(255,255,255,0.55); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .step-card { text-align: center; padding: 32px 20px; border: 1px solid rgba(66,165,245,0.15); border-radius: 14px; background: rgba(255,255,255,0.03); }
+    .step-number { font-family: 'Rajdhani', sans-serif; font-size: 2.8rem; font-weight: 700; color: rgba(66,165,245,0.25); line-height: 1; margin-bottom: 12px; }
+    .step-title { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .step-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+    /* CTA */
+    .cta-section { padding: 96px 5%; text-align: center; background: linear-gradient(160deg, #0A1A40 0%, #1565C0 100%); }
+    .cta-section h2 { color: #fff; margin: 0 auto 16px; }
+    .cta-section .section-intro { color: rgba(255,255,255,0.65); margin: 0 auto 48px; text-align: center; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { background: #070F28; padding: 56px 5% 32px; border-top: 1px solid rgba(66,165,245,0.1); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo { width: 52px; height: 52px; object-fit: contain; }
+    .footer-brand-name { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+    .footer-brand-desc { font-size: 0.88rem; color: rgba(255,255,255,0.35); line-height: 1.65; max-width: 280px; margin-bottom: 20px; }
+    .footer-contact { font-size: 0.85rem; color: var(--blue-accent); text-decoration: none; }
+    .footer-contact:hover { text-decoration: underline; }
+    .footer-col-title { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-links a { font-size: 0.9rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    .footer-col-links a:hover { color: var(--blue-accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.25); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: 0.8rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .promise-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .hero-subtitle { margin: 0 auto 40px; }
+      .download-buttons { justify-content: center; }
+      .hero-visual { order: -1; }
+      .phone-wrap { width: 200px; }
+      .stats-strip { flex-wrap: wrap; gap: 24px; }
+      .stat-item { border-right: none; padding: 0 24px; }
+      .nav-links { display: none; }
+      .prayer-callout { flex-direction: column; text-align: center; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <img class="nav-logo" src="shielded-path-logo.png" alt="The Shielded Path logo" />
+    <div class="nav-name">
+      The Shielded Path
+      <span>Your Family's Digital Herder</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#promise">Our Promise</a></li>
+    <li><a href="#faith">Faith &amp; Support</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#download" class="nav-cta">Get the App</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge">Now Available on iOS &amp; Android</div>
+      <h1>Guard Your Family's<br /><em>Digital Path</em></h1>
+      <p class="hero-subtitle">
+        The Shielded Path keeps harmful content off your children's devices — automatically, reliably, and without drama. Set it up once. Let it work.
+      </p>
+      <div class="download-group">
+        <span class="download-label">Download Free</span>
+        <div class="download-buttons">
+          <a class="btn-download" href="#">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <div>
+              <span class="btn-download-sub">Download on the</span>
+              <span class="btn-download-name">App Store</span>
+            </div>
+          </a>
+          <a class="btn-download" href="#">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.34.19.73.19 1.07.04l9.43-9.43-2.53-2.54-7.97 11.93zM20.55 10.83L17.9 9.3l-2.87 2.87 2.87 2.87 2.68-1.55c.76-.44.76-1.82-.03-2.66zM1.45.69C1.17.95 1 1.36 1 1.9v20.2c0 .54.17.95.46 1.21l.07.06 11.32-11.32v-.24L1.52.63l-.07.06zM14.5 7.13l-2.75 2.75-10.3-10.3C1.79.23 2.2.06 2.68.32L14.5 7.13z"/></svg>
+            <div>
+              <span class="btn-download-sub">Get it on</span>
+              <span class="btn-download-name">Google Play</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="hero-visual">
+      <div class="phone-wrap">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="ps-header">🛡️ Parent Dashboard</div>
+            <div class="ps-shield-btn">🛡️ Shield is ON</div>
+            <div class="ps-stats">
+              <div class="ps-stat">
+                <span class="ps-stat-label">Blocks Today</span>
+                <span class="ps-stat-num">14</span>
+              </div>
+              <div class="ps-stat">
+                <span class="ps-stat-label">This Week</span>
+                <span class="ps-stat-num">47</span>
+              </div>
+            </div>
+            <div class="ps-section-title">Protected Devices</div>
+            <div class="ps-device">
+              <div class="ps-device-name">📱 Jake's iPhone · Age 14</div>
+              <div class="ps-device-status">🟢 Connected · Shield ON</div>
+            </div>
+            <div class="ps-device">
+              <div class="ps-device-name">📟 Emma's iPad · Age 10</div>
+              <div class="ps-device-status">🟢 Connected · Shield ON</div>
+            </div>
+          </div>
+        </div>
+        <div class="ps-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Free to Use</span></div>
+  <div class="stat-item"><span class="stat-number">WiFi &amp; LTE</span><span class="stat-label">Always Protected</span></div>
+  <div class="stat-item"><span class="stat-number">iOS &amp; Android</span><span class="stat-label">Cross-Platform</span></div>
+  <div class="stat-item"><span class="stat-number">1-Min</span><span class="stat-label">Setup Time</span></div>
+</div>
+
+<!-- FEATURES -->
+<div id="features">
+  <div class="section">
+    <p class="section-tag">Why Families Trust Us</p>
+    <h2>Protection That Works in the Background</h2>
+    <p class="section-intro">No confusing dashboards. No tech degree required. The Shielded Path does the heavy lifting so you can focus on your family.</p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="feature-title">Active Shield Technology</div>
+        <p class="feature-desc">Blocks harmful websites the moment your child tries to visit them — on any network, including cellular data.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="feature-title">Parent PIN Protection</div>
+        <p class="feature-desc">Only you can turn off the shield. Your 4-digit PIN keeps kids from disabling protections when you're not looking.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="feature-title">Screen Time Limits</div>
+        <p class="feature-desc">Set daily hour limits per device. Quick presets for school days, weekends, and homework-first nights.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="feature-title">Activity Log</div>
+        <p class="feature-desc">See exactly what was blocked and when. Full transparency so you can have informed conversations with your kids.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="feature-title">Multi-Device Management</div>
+        <p class="feature-desc">Manage phones and tablets for every child in your family from one parent dashboard.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="feature-title">CSAM Deterrent Layer</div>
+        <p class="feature-desc">A permanent, always-on protection layer that cannot be disabled — verified against official blocklists from IWF and NCMEC.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SAFETY PROMISE -->
+<section class="promise-section" id="promise">
+  <div class="promise-inner">
+    <p class="section-tag">Our Safety Promise</p>
+    <h2>Built for Families. Not for Profit.</h2>
+    <p class="section-intro" style="margin-bottom: 40px;">Every decision in The Shielded Path was made with one question in mind: what would actually keep a child safer?</p>
+    <div class="promise-grid">
+      <ul class="promise-list">
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>Free forever.</strong> No subscription, no trial period, no paywall. Protection shouldn't cost a monthly fee.</p>
+        </li>
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>No ads, ever.</strong> We will never show your family advertisements or sell your data to third parties.</p>
+        </li>
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>Your PIN stays on your device.</strong> It is stored locally and never sent to any server.</p>
+        </li>
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>The CSAM layer cannot be turned off.</strong> Unlike other filters, this protection is permanently enabled in every version of the app.</p>
+        </li>
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>Age-aware responses.</strong> Children and adults see completely different block screens — appropriate and honest for each person.</p>
+        </li>
+        <li class="promise-item">
+          <div class="promise-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <p class="promise-text"><strong>Built by a parent.</strong> This app was created by a mother who wanted something better for her own family.</p>
+        </li>
+      </ul>
+      <div class="trust-cards">
+        <div class="trust-card">
+          <div class="trust-card-title">🔴 FBI CyberTipline</div>
+          <p class="trust-card-desc">When the CSAM warning screen appears, users are given direct access to report to the FBI at tips.fbi.gov.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-title">🔵 NCMEC Integration</div>
+          <p class="trust-card-desc">The National Center for Missing &amp; Exploited Children CyberTipline (1-800-843-5678) is shown on every serious block screen.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-title">🌐 IWF Blocklist Partnership</div>
+          <p class="trust-card-desc">We are working with the Internet Watch Foundation to integrate their verified blocklist feed into the app's protection layer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAITH & SUPPORT -->
+<section class="faith-section" id="faith">
+  <div class="faith-inner">
+    <p class="section-tag" style="color: var(--blue-mid);">Faith &amp; Spiritual Support</p>
+    <h2>Support for the Whole Person</h2>
+    <p class="faith-intro">The Shielded Path is not a religious app — but we believe that for many families, faith is one of the most powerful tools for healing and accountability. When a block screen appears, optional faith resources are available for those who want them, spanning many traditions.</p>
+    <div class="faith-grid">
+      <div class="faith-card"><span class="faith-icon">✝️</span><div class="faith-name">Catholic</div><p class="faith-desc">Integrity Restored — hope and healing rooted in Catholic teaching.</p></div>
+      <div class="faith-card"><span class="faith-icon">📖</span><div class="faith-name">LDS / Mormon</div><p class="faith-desc">Free addiction recovery program from The Church of Jesus Christ of Latter-day Saints.</p></div>
+      <div class="faith-card"><span class="faith-icon">🙏</span><div class="faith-name">Evangelical</div><p class="faith-desc">Focus on the Family counseling referrals from a Christian perspective.</p></div>
+      <div class="faith-card"><span class="faith-icon">✝️</span><div class="faith-name">Non-Denominational</div><p class="faith-desc">Celebrate Recovery — a Christ-centered 12-step program open to all.</p></div>
+      <div class="faith-card"><span class="faith-icon">✡️</span><div class="faith-name">Jewish</div><p class="faith-desc">Jewish Family Service — counseling and mental health support grounded in Jewish values.</p></div>
+      <div class="faith-card"><span class="faith-icon">☸️</span><div class="faith-name">Buddhist</div><p class="faith-desc">Mindfulness-based support for reducing craving and developing self-compassion.</p></div>
+    </div>
+    <div class="prayer-callout">
+      <div class="prayer-callout-text">
+        <h3>🙏 In-App Prayer &amp; Reflection</h3>
+        <p>Every block screen includes an optional "Prayer &amp; Reflection" button. When tapped, users choose their tradition and read a prayer privately, without judgment, entirely by their own choice.</p>
+      </div>
+      <div class="prayer-callout-badge">
+        <span class="prayer-callout-badge-icon">🕊️</span>
+        <span class="prayer-callout-badge-label">Optional &amp; Always<br />Available In-App</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how-it-works">
+  <div class="how-inner">
+    <p class="section-tag">Simple Setup</p>
+    <h2>Up and Running in Minutes</h2>
+    <p class="section-intro">No IT experience needed. Just follow four simple steps.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-number">01</div><div class="step-title">Download the App</div><p class="step-desc">Install The Shielded Path on your phone from the App Store or Google Play.</p></div>
+      <div class="step-card"><div class="step-number">02</div><div class="step-title">Create Your PIN</div><p class="step-desc">Set a 4-digit parent PIN during the quick welcome setup. Only you will know it.</p></div>
+      <div class="step-card"><div class="step-number">03</div><div class="step-title">Install on Kids' Devices</div><p class="step-desc">Download the app on each child's device and sign in with the same family account.</p></div>
+      <div class="step-card"><div class="step-number">04</div><div class="step-title">Activate the Shield</div><p class="step-desc">Tap the big shield button. Protection starts instantly across WiFi and cellular data.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD CTA -->
+<section class="cta-section" id="download">
+  <h2>Start Protecting Your Family Today</h2>
+  <p class="section-intro">Free to download. Free to use. No subscriptions required.</p>
+  <div class="cta-buttons">
+    <a class="btn-download" href="#" style="background: var(--white);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div><span class="btn-download-sub">Download on the</span><span class="btn-download-name">App Store</span></div>
+    </a>
+    <a class="btn-download" href="#" style="background: var(--white);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.34.19.73.19 1.07.04l9.43-9.43-2.53-2.54-7.97 11.93zM20.55 10.83L17.9 9.3l-2.87 2.87 2.87 2.87 2.68-1.55c.76-.44.76-1.82-.03-2.66zM1.45.69C1.17.95 1 1.36 1 1.9v20.2c0 .54.17.95.46 1.21l.07.06 11.32-11.32v-.24L1.52.63l-.07.06zM14.5 7.13l-2.75 2.75-10.3-10.3C1.79.23 2.2.06 2.68.32L14.5 7.13z"/></svg>
+      <div><span class="btn-download-sub">Get it on</span><span class="btn-download-name">Google Play</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-row">
+          <img class="footer-logo" src="shielded-path-logo.png" alt="The Shielded Path" />
+          <span class="footer-brand-name">The Shielded Path</span>
+        </div>
+        <p class="footer-brand-desc">Your Family's Trusted Digital Herder. Built by a parent, for parents — to give every family a safer path online.</p>
+        <a class="footer-contact" href="mailto:hello@theshieldedpath.com">hello@theshieldedpath.com</a>
+      </div>
+      <div>
+        <p class="footer-col-title">App</p>
+        <ul class="footer-col-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#download">Download for iOS</a></li>
+          <li><a href="#download">Download for Android</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Resources</p>
+        <ul class="footer-col-links">
+          <li><a href="https://tips.fbi.gov" target="_blank" rel="noopener">Report to the FBI</a></li>
+          <li><a href="https://www.missingkids.org/gethelpnow/cybertipline" target="_blank" rel="noopener">NCMEC CyberTipline</a></li>
+          <li><a href="https://www.stopitnow.org" target="_blank" rel="noopener">Stop It Now Helpline</a></li>
+          <li><a href="https://www.iwf.org.uk" target="_blank" rel="noopener">Internet Watch Foundation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 The Shielded Path. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
